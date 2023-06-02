@@ -29,7 +29,7 @@ server_3 = os.getenv('NAME3')
 def send_email(subject, body):
     sender = user
 
-    # Créer le message
+    # create message
     msg = EmailMessage()
     msg['From'] = sender
     msg['To'] = recipients
@@ -37,14 +37,14 @@ def send_email(subject, body):
     msg.set_content(body)
     context = ssl.create_default_context()
 
-    # Envoyer l'email
+    # Send email
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(user, password)
         smtp.sendmail(user, recipients, msg.as_string())
 
 
 def check_server(server_name, ip_address):
-    # Vérifier le ping
+    # Check ping
     print("\n----------PING----------")
     ping_cmd = ['ping', '-c', '1', ip_address]
     ping_result = subprocess.run(ping_cmd, capture_output=True, text=True)
@@ -56,7 +56,7 @@ def check_server(server_name, ip_address):
     else:
         print(Colors.GREEN, ping_result, Colors.RESET)
 
-    # Vérifier le DNS
+    # Check DNS
     print("\n----------DNS----------")
     dns_cmd = ['nslookup', server_name]
     dns_result = subprocess.run(dns_cmd, capture_output=True, text=True)
@@ -68,7 +68,7 @@ def check_server(server_name, ip_address):
     else:
         print(Colors.GREEN, dns_result, Colors.RESET)
 
-    # Vérifier la connexion HTTPS
+    # Check HTTPS connection
     print("\n----------HTTPS----------")
     curl_cmd = ['curl', '-I', f'https://{server_name}:443']
     curl_result = subprocess.run(curl_cmd, capture_output=True, text=True)
